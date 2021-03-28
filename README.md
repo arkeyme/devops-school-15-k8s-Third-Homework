@@ -1,3 +1,3 @@
 # Third Homework
 
-Answeres in subdirectories.
+Answers in subdirectories.

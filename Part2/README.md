@@ -9,7 +9,7 @@ According official Minio documentation, to run Minio we can use docker
 
 So, we just need to create StatefullSet from this.   
 
-At first, it will be good if we have secret to store variables in it. Let's create this:
+At first, it will be good if we have secret to store variables in it. Let's create one:
 
     k create ns minio
     k create secret generic --from-literal=MINIO_ROOT_USER=AKIAIOSFODNN7EXAMPLE --from-literal=MINIO_ROOT_PASSWORD=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY minio-secret -n minio
@@ -18,7 +18,7 @@ At second, let's create PV for our StatefuleSet:
 
     k apply -f pv_host_path5.yaml
 
-Since I already have 4 Persistent Volumes for the previous Stateful set, I have to create 5th for the new one. For every Replica we should create another PV
+Since I already have 4 Persistent Volumes for the previous Stateful set, I have to create 5th for the new one. For every Replica we should create another PV (only in bare metal k8s cluster)
 
 Time to create s statefull application, using minio_stateful_set.yaml file:
 
@@ -51,11 +51,11 @@ Let's check SVC:
     NAME       TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
     minio-sc   ClusterIP   10.96.104.83    <none>        9000/TCP         15m
 
-OK, we have ClusterIP type Service, we can reach our application minio inside the cluster, but to check it from the outside, we should create another service, by type of NodePort:
+OK, we have ClusterIP type Service, we can reach our application minio inside the cluster, but to check it from the outside, we should create another service, but with type of NodePort:
 
     k expose po minio-0 -n minio --type='NodePort' --port=9000
 
-Now, to connect to the service we should gather NODE_NAME:PORT to connect to it.  we should check where our pod run:
+Now, to connect to the service we should gather NODE_NAME:PORT parameters. We should check where our pod run:
 
     k get po,svc -n minio -o wide
     NAME          READY   STATUS    RESTARTS   AGE   IP          NODE       NOMINATED NODE   READINESS GATES
@@ -65,7 +65,7 @@ Now, to connect to the service we should gather NODE_NAME:PORT to connect to it.
     service/minio-0    NodePort    10.96.244.231   <none>        9000:30037/TCP   17m   app=minio,controller-revision-hash=minio-64df686db5,statefulset.kubernetes.io/pod-name=minio-0
     service/minio-sc   ClusterIP   10.96.104.83    <none>        9000/TCP         19m   app=minio
 
-The hostname of the node is worker-2, the port is 30037, Let's try to connect to it. [http://worker-2:30037/] As for the credentials we should take MINIO_ROOT_USER, MINIO_ROOT_PASSWORD from our secret. For this task we use:
+The hostname of the node is `worker-2`, the port is `30037`, Let's try to connect to it. [http://worker-2:30037/] As for the credentials we should take MINIO_ROOT_USER, MINIO_ROOT_PASSWORD from our secret. For this task we use:
 
     MINIO_ROOT_USER=AKIAIOSFODNN7EXAMPLE
     MINIO_ROOT_PASSWORD=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
