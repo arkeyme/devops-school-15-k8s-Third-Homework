@@ -1,1 +1,3 @@
-# devops-school-15-k8s-Third-Homework
+# Third Homework
+
+Answeres in subdirectories.
