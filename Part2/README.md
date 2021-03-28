@@ -20,7 +20,7 @@ At second, let's create PV for our StatefuleSet:
 
 Since I already have 4 Persistent Volumes for the previous Stateful set, I have to create 5th for the new one. For every Replica we should create another PV (only in bare metal k8s cluster)
 
-Time to create s statefull application, using minio_stateful_set.yaml file:
+Time to create a statefull application, using minio_stateful_set.yaml file:
 
     k apply -f minio_stateful_set.yaml
 
@@ -34,7 +34,7 @@ Let's look at it. First let's check PV and Newly created PVC in minio namespace:
 
 Status Bound, very good.   
 
-Next Check status of Pod And StatefulSet:   
+Next, check status of Pod and StatefulSet:   
 
     k get pod,statefulset -n minio
     NAME          READY   STATUS    RESTARTS   AGE
@@ -65,12 +65,12 @@ Now, to connect to the service we should gather NODE_NAME:PORT parameters. We sh
     service/minio-0    NodePort    10.96.244.231   <none>        9000:30037/TCP   17m   app=minio,controller-revision-hash=minio-64df686db5,statefulset.kubernetes.io/pod-name=minio-0
     service/minio-sc   ClusterIP   10.96.104.83    <none>        9000/TCP         19m   app=minio
 
-The hostname of the node is `worker-2`, the port is `30037`, Let's try to connect to it. [http://worker-2:30037/] As for the credentials we should take MINIO_ROOT_USER, MINIO_ROOT_PASSWORD from our secret. For this task we use:
+The hostname of the node is `worker-2`, the port is `30037`, Let's try to connect to it. [http://worker-2:30037/](http://worker-2:30037/) As for the credentials we should take MINIO_ROOT_USER, MINIO_ROOT_PASSWORD from our secret. For this task we use:
 
     MINIO_ROOT_USER=AKIAIOSFODNN7EXAMPLE
     MINIO_ROOT_PASSWORD=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
 
-If you, for some reason lost it, you can always refer to secret file we created for the our application early.
+If you, for some reason lost it, you can always refer to secret file we created early.
 
     kubectl get secret minio-secret -n minio -o go-template='{{range $k,$v := .data}}{{"### "}}{{$k}}{{"\n"}}{{$v|base64decode}}{{"\n\n"}}{{end}}'
 
