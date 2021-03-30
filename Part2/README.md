@@ -81,4 +81,3 @@ The output should be:
 
     ### MINIO_ROOT_USER
     AKIAIOSFODNN7EXAMPLE
-
