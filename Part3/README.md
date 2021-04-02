@@ -1,6 +1,6 @@
 # Complete chart of the simple application from the lecture. It should be configurable with values.
 
-According official Minio documentation, to run Minio we can use docker 
+To install this chart run helm:
 
     helm install app-simple .\Chart-Simple\
 
