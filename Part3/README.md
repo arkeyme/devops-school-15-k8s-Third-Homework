@@ -4,17 +4,17 @@ To install this chart run helm:
 
     helm install app-simple .\Chart-Simple\
 
-Execute command from notes, for example:
+Execute command from the output, for example:
 
     export NODE_PORT=$(kubectl get --namespace default -o jsonpath="{.spec.ports[0].nodePort}" services app-simple-svc)
     export NODE_IP=$(kubectl get nodes --namespace default -o jsonpath="{.items[0].status.addresses[0].address}")      
     echo http://$NODE_IP:$NODE_PORT
 
-Should return this:
+Should return something like this:
 
     http://192.168.5.11:31264
 
-Open link to the web-browser.
+Open this link to the web-browser.
 
 You can run additional exemplars of application by changing the name of helm chart:
 
