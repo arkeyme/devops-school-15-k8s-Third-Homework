@@ -6,5 +6,5 @@ replica: 1
 
 name: simple-nginx
 
-configmap: simple-nginx-configmap
+configmap: configmap
 
