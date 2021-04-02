@@ -1,5 +1,6 @@
 # Complete chart of the simple application from the lecture. It should be configurable with values.
 
+I create new chart.   
 To install this chart run helm:
 
     helm install app-simple .\Chart-Simple\
