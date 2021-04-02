@@ -1,0 +1,16 @@
+# •Number of replicas
+# •Labels
+# •Network ports
+# •Resource names should have similar pattern, for example app-svc and app-ingress
+# •Resources (it should be optional)
+
+container:
+  image: nginx:latest
+  port: 80
+
+replica: 1
+
+name: simple-nginx
+
+configmap: simple-nginx-configmap
+
