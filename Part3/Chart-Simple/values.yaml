@@ -1,0 +1,10 @@
+container:
+  image: nginx:latest
+  port: 80
+
+replica: 1
+
+name: simple-nginx
+
+configmap: simple-nginx-configmap
+
